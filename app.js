@@ -1,13 +1,23 @@
-var http = require("http");
-var express = require("express");
+var express = require("express"),
+    mongoose = require("mongoose"),
+    bodyParser = require('body-parser');
+    http = require('http');
+
+    require("./routes/controller")(app);
+
+
+//Instanciem l'objecte express
 var app = express();
-app.get("/",function(req,res) {
-	res.send("<h1>Welcome to Solidoy</h1>");
-});
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.get("/update",function(req,res) {
-    res.send("<h1>Updating</h1>");
-});
 
-app.listen(80);
-console.log("Magic on port 80");
+
+//optional , el motor de renderitzar per defecte es jade
+//app.engine('jade', require('jade').__express);
+app.set('view engine', 'jade');
+
+app.listen(80, function(){
+    console.log("Node server running on localhost:3000");
+});
