@@ -5,5 +5,9 @@ app.get("/",function(req,res) {
 	res.send("<h1>Welcome to Solidoy</h1>");
 });
 
+app.get("/update",function(req,res) {
+    res.send("<h1>Updating</h1>");
+});
+
 app.listen(80);
 console.log("Magic on port 80");
