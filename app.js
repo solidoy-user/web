@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 //app.engine('jade', require('jade').__express);
 app.set('view engine', 'jade');
 
-require("./controllers/controller")(app);
+require("./controllers/routes")(app);
 
 app.listen(80, function(){
     console.log("Node server running on localhost:80");
