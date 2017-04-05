@@ -5,7 +5,7 @@ module.exports = function(app){
     };
 
     app.get('/', function (req, res) {
-        res.render('main');
+        res.render('main',{title: 'Solidoy - Main page'});
     });
 
     app.get('/link', link);
