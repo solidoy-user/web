@@ -1,0 +1,11 @@
+doctype html
+html
+    head
+        include head
+        title #{title}
+    body
+        include navbar
+        .container.well
+            block content
+                p
+                    a.btn.btn-success(href="/link") Otro link
