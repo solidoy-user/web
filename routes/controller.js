@@ -4,7 +4,6 @@ module.exports = function(app){
             res.render('link', {title: 'Link'});
     };
 
-
     app.get('/', function (req, res) {
         res.render('header');
     });
