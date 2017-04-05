@@ -1,10 +1,8 @@
 var express = require("express"),
-    mongoose = require("mongoose"),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
     http = require('http');
 
-    require("./routes/controller")(app);
-
+require("./routes/controller")(app);
 
 //Instanciem l'objecte express
 var app = express();
