@@ -13,7 +13,15 @@ app.use(bodyParser.json());
 app.set('view engine', 'jade');
 
 require("./controllers/routes")(app);
+require("./.env");
+console.log(ENVIRONMENT);
 
-app.listen(80, function(){
-    console.log("Node server running on localhost:80");
-});
+if(ENVIRONMENT == "TESTING"){
+    app.listen(8080, function(){
+        console.log("Node server running on localhost:8080");
+    });
+} else {
+    app.listen(80, function(){
+        console.log("Node server in PRODUCTION running on solidoy.com");
+    });
+}
