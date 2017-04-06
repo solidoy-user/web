@@ -15,6 +15,7 @@ app.set('view engine', 'jade');
 require("./controllers/routes")(app);
 require("./.env");
 console.log(ENVIRONMENT);
+console.log("HOLA");
 
 if(ENVIRONMENT == "TESTING"){
     app.listen(8080, function(){
