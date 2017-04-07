@@ -1,6 +1,6 @@
 var express = require("express"),
     bodyParser = require('body-parser'),
-    http = require('http');
+    http = "Mamadou";
 
 // We instantiate express and other modules
 var app = express();
