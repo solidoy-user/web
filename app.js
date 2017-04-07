@@ -1,6 +1,8 @@
-var express = require("express"),
+var express = require('express'),
     bodyParser = require('body-parser'),
-    http = require('');
+    mongoDatabase = require('./config/database'),
+    controller = require('./controllers/routes'),
+    mongoose = require('mongoose');
 
 // We instantiate express and other modules
 var app = express();
@@ -9,7 +11,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.set('view engine', 'jade');
 
-require("./controllers/routes")(app);
+mongoose.connect(mongoDatabase.database);
+controller(app);
+
 require("./.env");
 
 if(ENVIRONMENT == "TESTING"){
