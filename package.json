@@ -15,8 +15,9 @@
     "express": "^4.15.2",
     "jade": "^1.11.0",
     "jwt-simple": "^0.5.1",
-    "momentjs": "^2.0.0"
     "jade": "^1.11.0",
     "mongoose": "^4.9.3"
+    "moment": "^2.18.1",
+    "mongoose": "^4.9.5"
   }
 }
