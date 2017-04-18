@@ -16,8 +16,7 @@
     "jade": "^1.11.0",
     "jwt-simple": "^0.5.1",
     "jade": "^1.11.0",
-    "mongoose": "^4.9.3"
-    "moment": "^2.18.1",
-    "mongoose": "^4.9.5"
+    "mongoose": "^4.9.5",
+    "moment": "^2.18.1"
   }
 }

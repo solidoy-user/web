@@ -1,16 +1,19 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+'use strict'
 
-var productSchema = new Schema({
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+const ProductSchema = Schema({
     codPro: Number,
     title: String,
     description: String,
-    images: Number,
-    categories:Number,
-    userId: String,
-    creationDate: Date,
-    expirationDate: Date,
-    status: Number
-});
+    images: { type: String },
+    category:{ type: String, enum: [
+      'Motor y accesorios', 'Electrónica', 'Deporte y ocio'
+    ]}
+    // creationDate: Date,
+    // expirationDate: Date,
+    // status: Number
+})
 
-module.exports = mongoose.model('products', productSchema);
+module.exports = mongoose.model('Product', ProductSchema)

@@ -1,4 +1,4 @@
-var express = require("express"),
+const express = require("express"),
     bodyParser = require('body-parser'),
     http = require('http'),
     routes = require('./routes/routes'),
