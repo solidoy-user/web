@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.set('view engine', 'jade');
 
-require("./controllers/routes")(app);
+require("./routes/routes")(app);
 require("./.env");
 
 if(ENVIRONMENT == "TESTING"){
