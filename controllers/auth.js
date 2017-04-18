@@ -1,7 +1,7 @@
 'use strict'
 
 const mongoose = require('mongoose');
-const User = require('../models/user');
+const User = require('../models/product');
 const service = require('../services');
 
 /**

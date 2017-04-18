@@ -1,9 +1,8 @@
-const express = require("express"),
-    bodyParser = require('body-parser'),
-    http = require('http'),
-    routes = require('./routes/routes'),
-    config = require('./config'),
-    mongoose = require('mongoose');
+const express = require('express'),
+      bodyParser = require('body-parser'),
+      routes = require('./routes/routes'),
+      config = require('./config'),
+      mongoose = require('mongoose');
 
 // We instantiate express and other modules
 var app = express();
