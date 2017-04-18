@@ -8,10 +8,13 @@ function isAuth(req,res,next) {
     }
 
     // Grab the token and decode it
-    const token = req.headers.authorization.split(" ")[1];
+    console.log("In the middleware");
+    const token = req.headers.authorization;
+    console.log(token);
     service.decodeToken(token)
         .then(response  => {
-            req.user = response
+            req.user = response;
+            console.log(req.user);
             next()
         })
         .catch(response => {

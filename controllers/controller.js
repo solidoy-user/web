@@ -9,6 +9,7 @@ function index(req, res) {
 };
 
 function privateArea(req,res) {
+    console.log("Estoy aquí");
     res.status(200).send({message: "Tienes acceso"});
 }
 

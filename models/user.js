@@ -23,7 +23,7 @@ UserSchema.pre('save',function (next) {
     if(!user.isModified('password')) return next();
 
     // Else
-    bcrypt.genSalt(10, function (err,next) {
+    bcrypt.genSalt(10, function (err,salt) {
         // If there's an error go to the next middleware
         if(err) return next(err);
 
@@ -33,18 +33,24 @@ UserSchema.pre('save',function (next) {
 
             // If there's no error, then change the password entered by the user to the generated hash
             user.password = hash;
-            next()
+            next();
         })
     })
 })
 
+// Now export the model
+module.exports = mongoose.model('User',UserSchema)
 // Generate the avatar for the user
-UserSchema.methods.gravatar = function () {
+module.exports.gravatar = function () {
     if(!this.email) return "https://es.gravatar.com/avatar/?s=200&d=retro"
 
     const md5 = crypto.createHash('md5').update(this.email).digest('hdex')
     return "https://es.gravatar.com/avatar/" + md5 + "?s=200&d=retro"
 }
 
-// Now export the model
-module.exports = mongoose.model('User',UserSchema)
+module.exports.comparePassword = function (userPasswword,hash,callback) {
+    bcrypt.compare(userPasswword, hash, function (err, isMatch) {
+        if (err) throw err;
+        callback(null, isMatch);
+    });
+}

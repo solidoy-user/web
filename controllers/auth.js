@@ -8,9 +8,11 @@ const service = require('../services');
  * SignUp method to register a user into the database
  */
 function signUp(req,res) {
-    const user = new user({
+    const user = new User({
         email: req.body.email,
-        name: req.body.name
+        name: req.body.name,
+        lastName: req.body.lastName,
+        password: req.body.password
     });
 
     user.save(function (err) {
@@ -27,9 +29,13 @@ function signIn(req,res) {
         if(err) return res.status(500).send({message: err});
         if(!user) return res.status(404).send({message: 'No existe el usuario'});
 
-        req.user = user;
-        res.status(200).send({message: "Te has logueado correctamente",
-        token: service.createToken(user)});
+        User.comparePassword(req.body.password,user.password,(err,isMatch) => {
+            if(err) throw err;
+            if(isMatch) {
+                res.status(200).send({message: "Te has logueado correctamente",
+                    token: service.createToken(user)});
+            }
+        });
     })
 
 }

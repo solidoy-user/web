@@ -1,6 +1,5 @@
 var express = require("express"),
     bodyParser = require('body-parser'),
-    http = require('http'),
     routes = require('./routes/routes'),
     config = require('./config'),
     mongoose = require('mongoose');
@@ -16,7 +15,7 @@ routes(app);
 
 // Connect to the database
 mongoose.connect(config.db);
-mongoose.connection.on("open", function(ref) {
+mongoose.connection.on("open", function() {
     console.log("Connected to mongo server.");
 });
 
