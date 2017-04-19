@@ -1,27 +1,43 @@
 var express = require("express"),
     bodyParser = require('body-parser'),
-    http = require('http'),
     routes = require('./routes/routes'),
     config = require('./config'),
-    mongoose = require('mongoose');
+    cors = require('cors'),
+    mongoose = require('mongoose'),
+    passport = require('passport');
 
 // We instantiate express and other modules
 var app = express();
+
+// Cors Middleware
+app.use(cors());
+
+// Set static folder
 app.use(express.static(__dirname + '/public'));
+
+// Bodyparser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Set the view engine
 app.set('view engine', 'jade');
 
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+require('./services/passport')(passport);
+
+// Run the routes
 routes(app);
 
 // Connect to the database
 mongoose.connect(config.db);
-mongoose.connection.on("open", function(ref) {
-    console.log("Connected to mongo server.");
+mongoose.connection.on("open", function() {
+    console.log(`Connected to ${config.db}`);
 });
 
 mongoose.connection.on("error", function(err) {
-    console.log("Could not connect to mongo server!");
+    console.log(`Could not connect to ${config.db}`);
     return console.log(err);
 });
 //require("./.env");

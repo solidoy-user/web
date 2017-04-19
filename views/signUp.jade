@@ -1,0 +1,44 @@
+extends main
+block content
+    if(success === undefined)
+        h1 Register a user
+        form(role='form' action="/register" method="post")
+            .form-group
+                input(name="firstName" placeholder="First Name" type="text").form-control
+            .form-group
+                input(name="lastName" placeholder="Last Name" type="text").form-control
+            .form-group
+                input(name="address" placeholder="Address" type="text").form-control
+            .form-group
+                input(name="email" placeholder="Email" type="email" required).form-control
+            .form-group
+                input(name="password" placeholder="Password" type="password" required id="password").form-control
+            .form-group
+                input(name="confirm_password" placeholder="Confirm Password" type="password" required id="confirm_password").form-control
+            .form-group
+                input(type="submit" value="Register").form-control.btn.btn-primary
+        script.
+            var text = "";
+            $("#password").keyup(function () {
+                text = $(this).val();
+                $("#confirm_password").val("");
+            }).keyup();
+
+            $("#confirm_password").keyup(function () {
+                var value = $(this).val();
+                if (text !== value) {
+                    $(this).css('background-color', '#ed796d');
+                    $('form').attr('onsubmit','return false;');
+                } else if(value === '') {
+                    $(this).css('background-color', '');
+                } else {
+                    $(this).css('background-color', '#9ff2bf');
+                    $('form').attr('onsubmit','return true;');
+                }
+            }).keyup();
+    else if(!success)
+        .container.text-justify
+            p.text-danger #{message}
+    else
+        .col-lg-12
+            p.text-success #{message}

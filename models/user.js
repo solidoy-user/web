@@ -2,49 +2,56 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
 // Define the user model
 const UserSchema = new Schema({
-    email: { type: String, unique: true, lowercase: true},
-    password: { type: String, select: false},
-    name: String,
+    email: {type: String, unique: true, lowercase: true, required: true},
+    password: {type: String, required: true},
+    firstName: String,
     lastName: String,
     address: String,
-    signupDate: { type: Date, default: Date.now()},
+    signupDate: {type: Date, default: Date.now()},
     lastLogin: Date
 });
 
-// Now before saving the user into the database first encrypt the password
-UserSchema.pre('save',function (next) {
-    let user  = this;
-    // If user didn't change the password then go to the next middleware
-    if(!user.isModified('password')) return next();
-
-    // Else
-    bcrypt.genSalt(10, function (err,next) {
-        // If there's an error go to the next middleware
-        if(err) return next(err);
-
-        // else
-        bcrypt.hash(user.password,salt,null,function (err,hash) {
-            if(err) return next(err);
-
-            // If there's no error, then change the password entered by the user to the generated hash
-            user.password = hash;
-            next()
-        })
-    })
-})
+const User = module.exports = mongoose.model('User', UserSchema);
 
 // Generate the avatar for the user
-UserSchema.methods.gravatar = function () {
-    if(!this.email) return "https://es.gravatar.com/avatar/?s=200&d=retro"
+module.exports.gravatar = function () {
+    if (!this.email) return "https://es.gravatar.com/avatar/?s=200&d=retro";
 
-    const md5 = crypto.createHash('md5').update(this.email).digest('hdex')
+    const md5 = crypto.createHash('md5').update(this.email).digest('hdex');
     return "https://es.gravatar.com/avatar/" + md5 + "?s=200&d=retro"
 }
 
-// Now export the model
-module.exports = mongoose.model('User',UserSchema)
+// Get user by Id
+module.exports.getUserById = function (id, callback) {
+    User.findById(id, callback);
+}
+
+// Get user by email
+module.exports.getUserByEmail = function (email, callback) {
+    const query = {email: email};
+    User.findOne(query, callback);
+}
+
+// Add a user
+module.exports.addUser = function (newUser, callback) {
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser.save(callback);
+        });
+    })
+}
+
+// Compare password
+module.exports.comparePassword = function(candidatePassword, hash, callback){
+    bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+        if(err) throw err;
+        callback(null, isMatch);
+    });
+}
